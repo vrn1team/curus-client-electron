@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Webcam</title>
+  <style type="text/css">
+    body {
+      font-family: Helvetica, sans-serif;
+    }
+
+    h2,
+    h3 {
+      margin-top: 0;
+    }
+
+    form {
+      margin-top: 15px;
+    }
+
+    form>input {
+      margin-right: 15px;
+    }
+
+    #results {
+      float: right;
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid;
+      background: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Using webcam</h1>
+  We are using Node.js <span id="node-version"></span>,
+  Chromium <span id="chrome-version"></span>,
+  and Electron <span id="electron-version"></span>.
+
+
+  <div id="results">Your captured image will appear here...</div>
+
+
+  <div id="my_camera"></div>
+
+  <!-- First, include the Webcam.js JavaScript Library -->
+  <!-- You can also require other files to run in this process -->
+  <script src="./renderer.js"></script>
+  <script type="text/javascript" src="lib/webcam.js"></script>
+
+  <!-- Configure a few settings and attach camera -->
+  <script language="JavaScript">
+
+
+
+    webcam.set({
+      width: 320,
+      height: 240,
+      image_format: 'jpeg',
+      jpeg_quality: 90,
+      enable_flash: false
+    });
+
+    webcam.set("constraints", {
+      optional: [{ minWidth: 600 }]
+    });
+    webcam.attach('#my_camera');
+  </script>
+
+  <!-- A button for taking snaps -->
+  <form>
+    <input type=button value="Take Snapshot" onClick="take_snapshot()">
+  </form>
+
+  <!-- Code to handle taking the snapshot and displaying it locally -->
+  <script language="JavaScript">
+    //var FileSaver = require('file-saver');
+    function take_snapshot() {
+      // take snapshot and get image data
+      webcam.snap(function (data_uri) {
+        // display results in page
+        document.getElementById('results').innerHTML =
+          '<h2>Here is your image:</h2>' +
+          '<img src="' + data_uri + '"/>';
+        //saveAs(data_uri, "~/projects/digital/dataset/image.jpg");
+
+        writeImageFile(data_uri, "/Users/admin/development/projects/digital/dataset/image1.jpg");
+        writeImageFile(data_uri, "/Users/admin/development/projects/digital/dataset/image2.jpg");
+        writeImageFile(data_uri, "/Users/admin/development/projects/digital/dataset/image3.jpg");
+        writeImageFile(data_uri, "/Users/admin/development/projects/digital/dataset/image4.jpg");
+
+      });
+    }
+
+    let timerId = setInterval(take_snapshot, 5000);
+
+  </script>
+</body>
+
+</html>
