@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Webcam</title>
+  <title>Монитор состояния</title>
   <style type="text/css">
     body {
       font-family: Helvetica, sans-serif;
@@ -24,11 +24,17 @@
     }
 
     #results {
-      float: left;
+      display: flex;
+      flex-direction: column;
+
       margin: 20px;
       padding: 20px;
       border: 1px solid;
       background: #ccc;
+    }
+
+    #my_camera {
+      display: flex;
     }
 
     .hidden {
@@ -51,7 +57,7 @@
 
 
   <div id="results">
-    <h2>Захваченное изображение...</h2>
+    <h2>изображение с камеры:</h2>
     <div id="my_camera"></div>
   </div>
 
@@ -72,7 +78,7 @@
     });
 
     webcam.set("constraints", {
-      optional: [{ minWidth: 600 }]
+      optional: [{ minWidth: 320 }]
     });
     webcam.attach('#my_camera');
   </script>
@@ -97,9 +103,8 @@
           '<h2>текущее изображение...</h2>' +
           '<img src="' + data_uri + '"/>';
         */
-
-
         sendImageToServer(data_uri);
+        //checkStatus();
       });
     }
 

@@ -44,3 +44,34 @@ function sendImageToServer(URI) {
             }
         });
 }
+
+function checkStatus() {
+    requestify.get('http://localhost:5000/check').then(function(response) {
+        // Get the response body
+        console.log(response.getBody());
+    });
+}
+
+function sendImageToServer(URI) {
+    requestify.post('http://localhost:5000/predimg', {
+        "img": URI
+    })
+        .then(function (response) {
+            // Get the response body (JSON parsed or jQuery object for XMLs)
+            answer = response.getBody()["class_name"];
+            console.log(answer);
+            if (answer == "Danger") {
+                dangers.push(1);
+                console.log(dangers.length);
+            } else {
+                dangers = []
+                body.classList.remove("danger-red");
+                header.classList.add("hidden");
+            }
+            if (dangers.length > 3) {
+                body.classList.add("danger-red");
+                header.classList.remove("hidden");
+                //alert("1");
+            }
+        });
+}
