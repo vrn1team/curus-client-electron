@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "file-saver": "^2.0.2",
-    "image-data-uri": "^2.0.1"
+    "image-data-uri": "^2.0.1",
+    "requestify": "^0.2.5"
   }
 }

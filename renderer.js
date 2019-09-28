@@ -2,38 +2,43 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 var fs = require('fs');
+var requestify = require('requestify');
 var webcam = require('./lib/webcam');
+var body = document.body;
+var header = document.getElementsByClassName("main-header");
+
+var dangers = [];
 
 const ImageDataURI = require('image-data-uri');
 
 
-function convertURIToImageData(URI) {
-    return new Promise(function (resolve, reject) {
-        if (URI == null) return reject();
-        var canvas = document.createElement('canvas'),
-            context = canvas.getContext('2d'),
-            image = new Image();
-        image.addEventListener('load', function () {
-            canvas.width = image.width;
-            canvas.height = image.height;
-            context.drawImage(image, 0, 0, canvas.width, canvas.height);
-            resolve(context.getImageData(0, 0, canvas.width, canvas.height));
-        }, false);
-        image.src = URI;
-    });
-}
-
 function writeImageFile(URI, path) {
-
-    // Here you can use imageData
-    console.log(URI);
-
-
+    //console.log(URI);
 
     try {
-        //var buf = new Buffer();
         ImageDataURI.outputFile(URI, path);
-
     } catch (e) { alert(e); }
 }
 
+
+function sendImageToServer(URI) {
+    requestify.post('http://localhost:5000/predimg', {
+        "img": URI
+    })
+        .then(function (response) {
+            // Get the response body (JSON parsed or jQuery object for XMLs)
+            answer = response.getBody()["class_name"];
+            console.log(answer);
+            if (answer == "Danger") {
+                dangers.push(1);
+                console.log(dangers.length);
+            } else {
+                dangers = []
+                body.classList.remove("danger-red");
+            }
+            if (dangers.length > 3) {
+                body.classList.add("danger-red");
+                //alert("1");
+            }
+        });
+}
