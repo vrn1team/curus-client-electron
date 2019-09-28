@@ -1,10 +1,11 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+const { app, Menu, Tray, BrowserWindow } = require('electron')
 const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let tray
 
 function createWindow() {
   // Create the browser window.
@@ -17,9 +18,22 @@ function createWindow() {
     }
   })
 
+  tray = new Tray('./cam.png')
+
+  tray.on('click', () => {
+    win.isVisible() ? win.hide() : win.show()
+  })
+  mainWindow.on('show', () => {
+    tray.setHighlightMode('always')
+  })
+  mainWindow.on('hide', () => {
+    tray.setHighlightMode('never')
+  })
+
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
-  mainWindow.webContents.openDevTools();
+  //if we need to open devtools
+  //mainWindow.webContents.openDevTools();
   mainWindow.webContents.on('devtools-opened', () => {
     setImmediate(() => {
       // do whatever you want to do after dev tool completely opened here
@@ -56,7 +70,3 @@ app.on('activate', function () {
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow()
 })
-
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

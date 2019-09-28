@@ -7,7 +7,7 @@
   <style type="text/css">
     body {
       font-family: Helvetica, sans-serif;
-      background-color: white;
+      background-color: darkolivegreen;
     }
 
     h2,
@@ -52,10 +52,8 @@
 
   <div id="results">
     <h2>Захваченное изображение...</h2>
+    <div id="my_camera"></div>
   </div>
-
-
-  <div id="my_camera" style="visibility: hidden"></div>
 
   <!-- First, include the Webcam.js JavaScript Library -->
   <!-- You can also require other files to run in this process -->
@@ -94,12 +92,12 @@
       // take snapshot and get image data
       webcam.snap(function (data_uri) {
         // display results in page
+        /*
         document.getElementById('results').innerHTML =
-          '<h2>Захваченное изображение...</h2>' +
+          '<h2>текущее изображение...</h2>' +
           '<img src="' + data_uri + '"/>';
-        //saveAs(data_uri, "~/projects/digital/dataset/image.jpg");
+        */
 
-        //writeImageFile(data_uri, "/Users/admin/development/projects/digital/dataset/image1.jpg");
 
         sendImageToServer(data_uri);
       });
