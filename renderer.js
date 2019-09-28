@@ -35,9 +35,11 @@ function sendImageToServer(URI) {
             } else {
                 dangers = []
                 body.classList.remove("danger-red");
+                header.classList.add("hidden");
             }
             if (dangers.length > 3) {
                 body.classList.add("danger-red");
+                header.classList.remove("hidden");
                 //alert("1");
             }
         });
