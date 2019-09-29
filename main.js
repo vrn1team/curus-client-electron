@@ -11,7 +11,7 @@ function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
-    height: 600,
+    height: 800,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true
@@ -33,16 +33,13 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
   //if we need to open devtools
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
   mainWindow.webContents.on('devtools-opened', () => {
     setImmediate(() => {
       // do whatever you want to do after dev tool completely opened here
       mainWindow.focus();
     });
   });
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

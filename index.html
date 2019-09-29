@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Монитор состояния</title>
+  <title>CURUS Монитор состояния</title>
   <style type="text/css">
     body {
       font-family: Helvetica, sans-serif;
@@ -67,22 +67,39 @@
 
     .hidden {
       visibility: hidden;
+      height: 0;
     }
 
     .main-header {
       color: red;
     }
 
+    .normal-header {
+      color: wheat;
+    }
+
     .danger-red {
       background-color: coral;
+    }
+
+    .neutral-white {
+      background-color: white;
     }
   </style>
 </head>
 
-<body>
+<body class="neutral-white">
   <div class="header-row">
+    <div class="logo-col">
+
+    </div>
     <div class="header-col">
       <h1 class="main-header hidden">Опасность!!!</h1>
+      <h1 class="normal-header hidden">ОК</h1>
+      <h1 class="offline-header">нет подключения</h1>
+    </div>
+    <div class="info-col">
+
     </div>
   </div>
 
