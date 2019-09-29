@@ -18,17 +18,17 @@ function createWindow() {
     }
   })
 
-  tray = new Tray('./cam.png')
+  //tray = new Tray('./cam.png')
 
-  tray.on('click', () => {
-    win.isVisible() ? win.hide() : win.show()
-  })
-  mainWindow.on('show', () => {
-    tray.setHighlightMode('always')
-  })
-  mainWindow.on('hide', () => {
-    tray.setHighlightMode('never')
-  })
+  // tray.on('click', () => {
+  //   win.isVisible() ? win.hide() : win.show()
+  // })
+  // mainWindow.on('show', () => {
+  //   tray.setHighlightMode('always')
+  // })
+  // mainWindow.on('hide', () => {
+  //   tray.setHighlightMode('never')
+  // })
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
