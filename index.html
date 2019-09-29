@@ -128,7 +128,7 @@
       webcam.snap(function (data_uri) {
 
         sendImageToServer(data_uri);
-
+        checkStatus();
       });
     }
 
@@ -136,8 +136,8 @@
       // take snapshot and get image data
       webcam.snap(function (data_uri) {
 
-        sendImageToServerAndCheckImmediate(data_uri);
-
+        sendImageToServer(data_uri);
+        checkStatus();
       });
     }
 

@@ -33,7 +33,7 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
   //if we need to open devtools
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
   mainWindow.webContents.on('devtools-opened', () => {
     setImmediate(() => {
       // do whatever you want to do after dev tool completely opened here
