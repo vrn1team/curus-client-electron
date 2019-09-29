@@ -33,12 +33,44 @@
       background: #ccc;
     }
 
-    #my_camera {
+    .cam-outer {
+      padding: 10px;
       display: flex;
+    }
+
+    .cam-inner {
+      margin: auto;
+      width: 320px;
+      height: 240px;
+    }
+
+    .header-row,
+    .cam-form_row {
+      margin: auto;
+    }
+
+    .header-row h1 {
+      text-align: center;
+      display: block;
+    }
+
+    .cam-form_col {
+      padding: 10px;
+    }
+
+    .button-style {
+      padding: 15px;
+      cursor: pointer;
+      color: black;
+      background: plum;
     }
 
     .hidden {
       visibility: hidden;
+    }
+
+    .main-header {
+      color: red;
     }
 
     .danger-red {
@@ -48,21 +80,25 @@
 </head>
 
 <body>
-  <h1 class="hidden">Опасность!!!</h1>
-  <!--
-  We are using Node.js <span id="node-version"></span>,
-  Chromium <span id="chrome-version"></span>,
-  and Electron <span id="electron-version"></span>.
-  -->
-
-
-  <div id="results">
-    <h2>изображение с камеры:</h2>
-    <div id="my_camera"></div>
+  <div class="header-row">
+    <div class="header-col">
+      <h1 class="main-header hidden">Опасность!!!</h1>
+    </div>
   </div>
 
-  <!-- First, include the Webcam.js JavaScript Library -->
-  <!-- You can also require other files to run in this process -->
+
+  <div class="cam-outer" id="results">
+    <div class="cam-form cam-form_row" id="cam-form1">
+      <div class="cam-form cam-form_col" id="cam-form2">
+        <form>
+          <input type=button class="button-style" value="Проверить состояние" onClick="take_snapshot_immediate()">
+        </form>
+      </div>
+    </div>
+    <div class="cam-inner" id="my_camera"></div>
+  </div>
+
+
   <script src="./renderer.js"></script>
   <script type="text/javascript" src="lib/webcam.js"></script>
 
@@ -83,28 +119,25 @@
     webcam.attach('#my_camera');
   </script>
 
-  <!-- A button for taking snaps -->
-
-  <!--
-  <form>
-    <input type=button value="Take Snapshot" onClick="take_snapshot()">
-  </form>
-  -->
 
   <!-- Code to handle taking the snapshot and displaying it locally -->
   <script language="JavaScript">
-    //var FileSaver = require('file-saver');
+
     function take_snapshot() {
       // take snapshot and get image data
       webcam.snap(function (data_uri) {
-        // display results in page
-        /*
-        document.getElementById('results').innerHTML =
-          '<h2>текущее изображение...</h2>' +
-          '<img src="' + data_uri + '"/>';
-        */
+
         sendImageToServer(data_uri);
-        //checkStatus();
+
+      });
+    }
+
+    function take_snapshot_immediate() {
+      // take snapshot and get image data
+      webcam.snap(function (data_uri) {
+
+        sendImageToServerAndCheckImmediate(data_uri);
+
       });
     }
 

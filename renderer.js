@@ -5,7 +5,7 @@ var fs = require('fs');
 var requestify = require('requestify');
 var webcam = require('./lib/webcam');
 var body = document.body;
-var header = document.getElementsByClassName("main-header");
+var header = document.getElementsByClassName("main-header")[0];
 
 var dangers = [];
 
@@ -45,8 +45,26 @@ function sendImageToServer(URI) {
         });
 }
 
+function sendImageToServerAndCheckImmediate(URI) {
+    requestify.post('http://localhost:5000/predimg', {
+        "img": URI
+    })
+        .then(function (response) {
+            // Get the response body (JSON parsed or jQuery object for XMLs)
+            answer = response.getBody()["class_name"];
+            console.log(answer);
+            if (answer == "Danger") {
+                body.classList.add("danger-red");
+                header.classList.remove("hidden");
+            } else {
+                body.classList.remove("danger-red");
+                header.classList.add("hidden");
+            }
+        });
+}
+
 function checkStatus() {
-    requestify.get('http://localhost:5000/check').then(function(response) {
+    requestify.get('http://localhost:5000/check').then(function (response) {
         // Get the response body
         console.log(response.getBody());
     });
